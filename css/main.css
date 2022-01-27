@@ -1,0 +1,25 @@
+h2{
+    text-align: center;
+}
+
+
+.board{
+    padding-top: 50px;
+    margin-left: 50px;
+}
+.board td:hover {
+    background-color: lightsalmon;
+}
+.occupied {
+    background-color: lightgray;
+}
+.unoccupied {
+    background-color: white;
+}
+
+.board td {
+    width: 50px;
+    height: 40px;
+    text-align: center;
+    transition: 0.5s;
+}
