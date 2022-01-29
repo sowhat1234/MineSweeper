@@ -1,6 +1,5 @@
 'use strict';
 
-
 var gTimer = 0;
 var gElTimer;
 var gIntervalId;
@@ -8,8 +7,6 @@ var gIntervalId;
 const FLAG = '🚩';
 const SIGN = ' ';
 const BOMB = '💣';
-
-
 
 var gBoard;
 var gUpdateText = document.querySelector('h2 span');
@@ -23,22 +20,21 @@ var gLevel = {
     lives: 1
 }
 
-
 function init() {
     buildBoard(gLevel.size)
     gGame = {
         isOn: true,
         shownCount: 0,
         markedCount: 0,
-        timer: false
+        timer: false,
+        level: 1
     }
-    gUpdateLives.innerText = 'lifes ' + gLevel.lives;
+    gUpdateLives.innerText = 'lives ' + gLevel.lives;
     gUpdateText.innerText = '😊';
     gUpdateStatus.innerText = '';
     renderBoard(gBoard)
 
 }
-
 
 function buildBoard(size) {
     gBoard = [];
@@ -53,12 +49,9 @@ function buildBoard(size) {
             };
         };
     };
-    // gBoard[1][1].isMine = true;
-    // gBoard[1][2].isMine = true;
     createMines(gLevel.mines);
     return gBoard;
 };
-
 
 function onClickCell(elCell, i, j) {
     var currCell = gBoard[i][j];
@@ -78,21 +71,17 @@ function onClickCell(elCell, i, j) {
         var minesCount = setMinesNegsCount(gBoard, i, j);
         elCell.innerText = minesCount === 0 ? '' : minesCount;
     }
-    if (currCell.isMine) {
+    if (currCell.isMine && !currCell.isShown) {
         elCell.classList.add('unoccupied')
         elCell.classList.remove('occupied');
         elCell.innerText = BOMB;
         gLevel.lives--;
-        gUpdateLives.innerText = 'lifes ' + gLevel.lives;
+        gUpdateLives.innerText = 'lives ' + gLevel.lives;
+        currCell.isShown = true;
         gameOver()
     }
     checkWin();
 }
-
-
-
-
-
 
 function onCellMarked(elCell, i, j) {
     if (!gGame.timer) {
@@ -114,7 +103,6 @@ function onCellMarked(elCell, i, j) {
     }
     checkWin();
 }
-
 
 function setMinesNegsCount(mat, rowIdx, colIdx) {
     var count = 0;
@@ -176,8 +164,7 @@ function getEmptyCell(size) {
     return emptyCells;
 };
 
-
-function onGameOverExplode(elCell) {
+function onGameOverExplode() {
     gGame.isOn = false;
 
     for (var i = 0; i < gBoard.length; i++) {
@@ -188,7 +175,6 @@ function onGameOverExplode(elCell) {
                 cell.classList.add('unoccupied')
                 cell.classList.remove('occupied');
                 cell.innerText = BOMB;
-                // elCell.style.backgroundColor = 'red';
             }
         }
     }
@@ -197,20 +183,18 @@ function onGameOverExplode(elCell) {
 function gameOver() {
     if (gLevel.lives === 0) {
         gUpdateText.innerText = '🤯'
-        gUpdateStatus.innerText = 'LOSER'
-        gUpdateLives.innerText = 'lifes ' + gLevel.lives
+        gUpdateStatus.innerText = 'YOU LOST! TRY AGAIN?'
+        gUpdateLives.innerText = 'lives ' + gLevel.lives
         clearInterval(gIntervalId)
         onGameOverExplode()
     }
-    // onGameOverExplode(elCell) - make the cell red
 }
-
 
 function checkWin() {
     if (gGame.markedCount === gLevel.mines && gGame.shownCount === (gLevel.size ** 2) - gLevel.mines) {
         gGame.isOn = false;
         gUpdateText.innerText = '😎';
-        gUpdateStatus.innerText = 'WINNER';
+        gUpdateStatus.innerText = 'YOU WON!!! PLAY AGAIN?';
         clearInterval(gIntervalId)
     }
 }
@@ -218,8 +202,9 @@ function checkWin() {
 function updateLevel(size, mines, lives) {
     gLevel.size = size;
     gLevel.mines = mines;
-    gLevel.lives = lives
-    restartGame()
+    gLevel.lives = lives;
+    gGame.level = lives;
+    restartGame();
 }
 
 function resetParams() {
@@ -231,8 +216,8 @@ function resetParams() {
     gElTimer.innerText = 0;
 }
 
-
-function restartGame(lives) {
+function restartGame() {
+    gLevel.lives = gGame.level;
     init();
     resetParams()
 }

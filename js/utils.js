@@ -1,13 +1,10 @@
 'use strict';
 
-
-
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min); 
 }
-
 
 function renderBoard(board) {
     var strHTML = '<table border="5" cellpadding="10"><tbody>'
@@ -26,10 +23,9 @@ function renderBoard(board) {
     elContainer.innerHTML = strHTML;
 };
 
-
 function renderTimer() {
     var gElTimer = document.querySelector('.timer');
-    var stopWatch = Number(gTimer).toFixed(3) + ''
+    var stopWatch = Number(gTimer)
     gElTimer.innerText = stopWatch;
 }
 

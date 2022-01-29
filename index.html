@@ -9,27 +9,20 @@
     <title>MineSweeper</title>
 </head>
 
-<body onload="init()">
-    
-    <br>
-    <br>
-    <br>
-    <div>
-        <button onclick="updateLevel(4,2,1)">Begginer</button>
-        <button onclick="updateLevel(8,12,2)">Medium</button>
-        <button onclick="updateLevel(12,30,3)">Extreme</button>
-    </div>
-    <h4></h4>
-    <div class="timer">0</div>
-    <h2><span onclick="restartGame()"></span></h2>
-    <h3></h3>
-    <div class="board"></div>
-    <div class="button">
-        <br>
-        <button onclick="restartGame()">Restart</button>
+<body onload="init()">   
+    <div class="content">
+        <div>
+            <button class="btn" onclick="updateLevel(4,2,1)">Begginer</button>
+            <button class="btn" onclick="updateLevel(8,12,2)">Medium</button>
+            <button class="btn" onclick="updateLevel(12,30,3)">Extreme</button>
+        </div>
+        <h4 class="lives"></h4>
+        <div class="timer">0</div>
+        <h2><span class="reset" onclick="restartGame()"></span></h2>
+        <h3 class="info"></h3>
+        <div class="board"></div>
     </div>
     <script src="js/utils.js"></script>
     <script src="js/game.js"></script>
 </body>
-
 </html>
