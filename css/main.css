@@ -1,11 +1,37 @@
+html{
+    background-color: beige;
+    border-top-color: blueviolet;
+}
+
+h4{
+    text-align: center;
+}
+.timer{
+    background-color: antiquewhite;
+    border-bottom-color: aqua;
+}
+div{
+    text-align: center;
+    transition: 0.5s;
+}
+
 h2{
     text-align: center;
 }
-
+h3{
+    text-align: center;
+}
 
 .board{
-    padding-top: 50px;
-    margin-left: 50px;
+    
+    display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+    
+    
 }
 .board td:hover {
     background-color: lightsalmon;
@@ -18,8 +44,8 @@ h2{
 }
 
 .board td {
-    width: 50px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     text-align: center;
     transition: 0.5s;
 }
